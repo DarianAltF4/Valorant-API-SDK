@@ -20,4 +20,18 @@ export function getAllAgents(isPlayableCharacter?: boolean) {
   });
 }
 
-export default { getAllAgents };
+export function getAgentByName(name: string) {
+  return new Promise((resolve, reject) => {
+    const formatedName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    axios.get(apiURL)
+      .then((res) => {
+        const dataForName = res.data.data.filter((agent: any) => {
+          return agent.displayName === formatedName;
+        });
+        resolve(dataForName[0]);
+      })
+      .catch(reject);
+  });
+}
+
+export default { getAllAgents, getAgentByName };
