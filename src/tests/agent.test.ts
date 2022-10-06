@@ -1,13 +1,13 @@
 const axios = require('axios');
-const sdk = require('../agents.ts');
+const agentSDK = require('../agents.ts');
 
-const apiURL = 'https://valorant-api.com/v1/agents';
+const agentURL = 'https://valorant-api.com/v1/agents';
 
 describe('Agent Tests', () => {
   test('Should get all agent data', () => {
-    return sdk.getAllAgents()
+    return agentSDK.getAllAgents()
       .then((data: any) => {
-        return axios.get(apiURL)
+        return axios.get(agentURL)
           .then((res: any) => {
             expect(data).toMatchObject(res.data.data);
           });
@@ -18,9 +18,9 @@ describe('Agent Tests', () => {
   });
 
   test('Should get all playable agents', () => {
-    return sdk.getAllAgents(true)
+    return agentSDK.getAllAgents(true)
       .then((data: any) => {
-        return axios.get(apiURL, { params: { isPlayableCharacter: true } })
+        return axios.get(agentURL, { params: { isPlayableCharacter: true } })
           .then((res: any) => {
             expect(data).toMatchObject(res.data.data);
           })
@@ -31,9 +31,9 @@ describe('Agent Tests', () => {
   });
 
   test('Should get all non-playable agents', () => {
-    return sdk.getAllAgents(false)
+    return agentSDK.getAllAgents(false)
       .then((data: any) => {
-        return axios.get(apiURL, { params: { isPlayableCharacter: false } })
+        return axios.get(agentURL, { params: { isPlayableCharacter: false } })
           .then((res: any) => {
             expect(data).toMatchObject(res.data.data);
           })
@@ -44,10 +44,10 @@ describe('Agent Tests', () => {
   });
 
   test('Should get agent by name', () => {
-    return sdk.getAgentByName('Breach')
+    return agentSDK.getAgentByName('Breach')
       .then((data: any) => {
         const breachUUID = '5f8d3a7f-467b-97f3-062c-13acf203c006';
-        return axios.get(`${apiURL}/${breachUUID}`)
+        return axios.get(`${agentURL}/${breachUUID}`)
           .then((res: any) => {
             expect(data).toMatchObject(res.data.data);
           })
@@ -58,10 +58,10 @@ describe('Agent Tests', () => {
   });
 
   test('Should get agent by name with any cased string', () => {
-    return sdk.getAgentByName('BReacH')
+    return agentSDK.getAgentByName('BReacH')
       .then((data: any) => {
         const breachUUID = '5f8d3a7f-467b-97f3-062c-13acf203c006';
-        return axios.get(`${apiURL}/${breachUUID}`)
+        return axios.get(`${agentURL}/${breachUUID}`)
           .then((res: any) => {
             expect(data).toMatchObject(res.data.data);
           })
@@ -71,3 +71,5 @@ describe('Agent Tests', () => {
       });
   });
 });
+
+export {};
